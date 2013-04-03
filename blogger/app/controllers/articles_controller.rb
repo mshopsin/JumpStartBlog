@@ -14,6 +14,39 @@ class ArticlesController < ApplicationController
 
   def create
 
+    @article = Article.new(
+      title: params[:article][:title],
+      body: params[:article][:body])
+    @article.save
+
+    redirect_to article_path(@article)
+
   end
+
+  def destroy
+
+     Article.find(params[:id]).destroy
+     redirect_to articles_path
+
+
+  end
+
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+
+    @article = Article.find(params[:id])
+    @article.update_attributes(params[:article])
+
+    flash.notice = "Article '#{@article.title}' Updated!"
+
+    redirect_to article_path(@article)
+
+  end
+
+
+
 
 end
